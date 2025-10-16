@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Management System - Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f7fa;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .tabs {
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .tab-buttons {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            gap: 0;
+        }
+        
+        .tab-button {
+            flex: 1;
+            padding: 18px 30px;
+            background: white;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            color: #7f8c8d;
+            transition: all 0.3s;
+        }
+        
+        .tab-button:hover {
+            background: #f8f9fa;
+            color: #2c3e50;
+        }
+        
+        .tab-button.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+            background: #f8f9fa;
+        }
+        
+        .tab-content {
+            display: none;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* PRD Styles */
+        .prd-section {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        
+        .prd-section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+            font-size: 28px;
+        }
+        
+        .prd-section h3 {
+            color: #34495e;
+            margin: 25px 0 15px 0;
+            font-size: 22px;
+        }
+        
+        .prd-section h4 {
+            color: #546e7a;
+            margin: 20px 0 10px 0;
+            font-size: 18px;
+        }
+        
+        .prd-section p, .prd-section li {
+            color: #5a6c7d;
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+        
+        .prd-section ul, .prd-section ol {
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            white-space: pre;
+        }
+        
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .tech-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+        
+        table th {
+            background: #34495e;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        table td {
+            padding: 12px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        /* Wireframe Styles */
+        .wireframe {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .wireframe h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: #3498db;
+            color: white;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+        
+        .app-title {
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .btn-primary {
+            background: white;
+            color: #3498db;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .filter-bar {
+            padding: 15px 20px;
+            background: #ecf0f1;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .filter-label {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        select {
+            padding: 8px 12px;
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+            background: white;
+        }
+        
+        .task-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+        
+        .task-table thead {
+            background: #34495e;
+            color: white;
+        }
+        
+        .task-table th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .task-table td {
+            padding: 12px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        .task-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .status-icebox { background: #95a5a6; color: white; }
+        .status-todo { background: #3498db; color: white; }
+        .status-wip { background: #f39c12; color: white; }
+        .status-done { background: #27ae60; color: white; }
+        
+        .btn-edit {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 5px;
+            font-size: 14px;
+        }
+        
+        .btn-delete {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .modal-overlay {
+            background: rgba(0,0,0,0.5);
+            padding: 40px;
+            border-radius: 6px;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .modal {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .modal h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #34495e;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 25px;
+        }
+        
+        .btn-cancel {
+            background: #95a5a6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .btn-save {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .confirmation-modal {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            max-width: 400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .confirmation-modal h3 {
+            color: #e74c3c;
+            margin-bottom: 15px;
+        }
+        
+        .confirmation-modal p {
+            color: #7f8c8d;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .stat-card.icebox { border-color: #95a5a6; }
+        .stat-card.todo { border-color: #3498db; }
+        .stat-card.wip { border-color: #f39c12; }
+        .stat-card.done { border-color: #27ae60; }
+        
+        .stat-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+        
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 4px;
+            color: #856404;
+        }
+        
+        /* FAQ Styles */
+        .faq-item {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        .faq-question {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .faq-question::before {
+            content: "Q";
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: 700;
+        }
+        
+        .faq-answer {
+            color: #5a6c7d;
+            line-height: 1.8;
+            padding-left: 45px;
+        }
+        
+        .faq-answer ul {
+            margin: 10px 0 10px 20px;
+        }
+        
+        .faq-answer code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📋 Task Management System</h1>
+        <p>Complete Documentation for Students & Trainees | CRUD Application with 3-Tier Architecture</p>
+    </div>
+    
+    <div class="tabs">
+        <div class="tab-buttons">
+            <button class="tab-button active" data-tab="prd">📄 PRD Document</button>
+            <button class="tab-button" data-tab="wireframes">🎨 Wireframes</button>
+            <button class="tab-button" data-tab="code-guide">💻 Code Structure</button>
+            <button class="tab-button" data-tab="faq">❓ FAQ</button>
+        </div>
+    </div>
+    
+    <!-- PRD Tab -->
+    <div id="prd" class="tab-content active">
+        <div class="prd-section">
+            <h2>1. Product Overview</h2>
+            
+            <h3>1.1 Product Description</h3>
+            <p>A simple task management system implementing CRUD (Create, Read, Update, Delete) operations with status tracking. The application follows a 3-tier architecture pattern with clear separation between presentation, business logic, and data layers.</p>
+            
+            <h3>1.2 Tech Stack</h3>
+            <div class="tech-stack">
+                <div class="tech-item">Frontend<br>Vanilla JavaScript</div>
+                <div class="tech-item">Backend<br>Node.js + Express</div>
+                <div class="tech-item">Database<br>MySQL 8.0+</div>
+            </div>
+            
+            <h3>1.3 Architecture - 3 Tier System</h3>
+            <div class="info-box">
+                <strong>Tier 1 - Presentation Layer:</strong> Browser-based UI (HTML, CSS, Vanilla JS)<br>
+                <strong>Tier 2 - Application Layer:</strong> RESTful API (Express.js)<br>
+                <strong>Tier 3 - Data Layer:</strong> MySQL Database
+            </div>
+        </div>
+        
+        <div class="prd-section">
+            <h2>2. Database Schema</h2>
+            <pre class="code-block">CREATE TABLE `tasks` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `status` enum('ICEBOX','TODO','WIP','DONE') NOT NULL,
+  PRIMARY KEY (`id`)
+)</pre>
+            
+            <h3>Field Descriptions</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Field</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>id</strong></td>
+                        <td>int</td>
+                        <td>Auto-incrementing primary key</td>
+                    </tr>
+                    <tr>
+                        <td><strong>title</strong></td>
+                        <td>varchar(255)</td>
+                        <td>Task description (max 255 characters)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>status</strong></td>
+                        <td>enum</td>
+                        <td>ICEBOX (backlog), TODO (ready), WIP (in progress), DONE (completed)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="prd-section">
+            <h2>3. Functional Requirements</h2>
+            
+            <h3>FR-1: Create Task</h3>
+            <ul>
+                <li>User can create a new task with a title</li>
+                <li>Default status is TODO</li>
+                <li>Title is required and cannot be empty</li>
+                <li>Maximum title length: 255 characters</li>
+            </ul>
+            
+            <h3>FR-2: Read Tasks</h3>
+            <ul>
+                <li>Display all tasks in a table view</li>
+                <li>Show task ID, title, and current status</li>
+                <li>Visual distinction between different statuses</li>
+                <li>Filter tasks by status</li>
+            </ul>
+            
+            <h3>FR-3: Update Task</h3>
+            <ul>
+                <li>User can edit task title</li>
+                <li>User can change task status via dropdown</li>
+                <li>Validation: title cannot be empty</li>
+            </ul>
+            
+            <h3>FR-4: Delete Task</h3>
+            <ul>
+                <li>User can delete any task</li>
+                <li>Confirmation dialog before deletion</li>
+                <li>Permanent removal from database</li>
+            </ul>
+        </div>
+        
+        <div class="prd-section">
+            <h2>4. API Specification</h2>
+            
+            <h3>GET /api/tasks</h3>
+            <p>Retrieve all tasks</p>
+            <pre class="code-block">Response: 200 OK
+[
+  {
+    "id": 1,
+    "title": "Implement user authentication",
+    "status": "WIP"
+  },
+  {
+    "id": 2,
+    "title": "Write API documentation",
+    "status": "TODO"
+  }
+]</pre>
+            
+            <h3>POST /api/tasks</h3>
+            <p>Create new task</p>
+            <pre class="code-block">Request Body:
+{
+  "title": "New task title",
+  "status": "TODO"
+}
+
+Response: 201 Created
+{
+  "id": 3,
+  "title": "New task title",
+  "status": "TODO"
+}</pre>
+            
+            <h3>PUT /api/tasks/:id</h3>
+            <p>Update existing task</p>
+            <pre class="code-block">Request Body:
+{
+  "title": "Updated title",
+  "status": "DONE"
+}
+
+Response: 200 OK
+{
+  "id": 1,
+  "title": "Updated title",
+  "status": "DONE"
+}</pre>
+            
+            <h3>DELETE /api/tasks/:id</h3>
+            <p>Delete task</p>
+            <pre class="code-block">Response: 204 No Content</pre>
+            
+            <h3>Error Responses</h3>
+            <pre class="code-block">400 Bad Request
+{ "error": "Title is required" }
+
+404 Not Found
+{ "error": "Task not found" }
+
+500 Internal Server Error
+{ "error": "Database connection failed" }</pre>
+        </div>
+        
+        <div class="prd-section">
+            <h2>5. Project Structure</h2>
+            <pre class="code-block">task-management/
+├── frontend/
+│   ├── index.html
+│   ├── css/
+│   │   └── styles.css
+│   └── js/
+│       └── app.js
+├── backend/
+│   ├── server.js
+│   ├── routes/
+│   │   └── tasks.js
+│   ├── controllers/
+│   │   └── taskController.js
+│   ├── models/
+│   │   └── taskModel.js
+│   └── config/
+│       └── database.js
+└── package.json</pre>
+            
+            <div class="success-box">
+                <strong>Learning Tip:</strong> This structure follows the MVC (Model-View-Controller) pattern, which is industry-standard for organizing code.
+            </div>
+        </div>
+    </div>
+    
+    <!-- Wireframes Tab -->
+    <div id="wireframes" class="tab-content">
+        <div class="wireframe">
+            <h2>1. Main Dashboard View</h2>
+            
+            <div class="app-header">
+                <div class="app-title">Task Management System</div>
+                <button class="btn-primary">+ Add New Task</button>
+            </div>
+            
+            <div class="stats-container">
+                <div class="stat-card icebox">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">ICEBOX</div>
+                </div>
+                <div class="stat-card todo">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">TODO</div>
+                </div>
+                <div class="stat-card wip">
+                    <div class="stat-number">2</div>
+                    <div class="stat-label">IN PROGRESS</div>
+                </div>
+                <div class="stat-card done">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">DONE</div>
+                </div>
+            </div>
+            
+            <div class="filter-bar">
+                <span class="filter-label">Filter by Status:</span>
+                <select>
+                    <option>All Tasks</option>
+                    <option>ICEBOX</option>
+                    <option>TODO</option>
+                    <option>WIP</option>
+                    <option>DONE</option>
+                </select>
+            </div>
+            
+            <table class="task-table">
+                <thead>
+                    <tr>
+                        <th style="width: 60px;">ID</th>
+                        <th>Task Title</th>
+                        <th style="width: 150px;">Status</th>
+                        <th style="width: 180px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Setup project repository</td>
+                        <td><span class="status-badge status-done">DONE</span></td>
+                        <td>
+                            <button class="btn-edit">Edit</button>
+                            <button class="btn-delete">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Design database schema</td>
+                        <td><span class="status-badge status-done">DONE</span></td>
+                        <td>
+                            <button class="btn-edit">Edit</button>
+                            <button class="btn-delete">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Implement REST API</td>
+                        <td><span class="status-badge status-wip">WIP</span></td>
+                        <td>
+                            <button class="btn-edit">Edit</button>
+                            <button class="btn-delete">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Create frontend interface</td>
+                        <td><span class="status-badge status-todo">TODO</span></td>
+                        <td>
+                            <button class="btn-edit">Edit</button>
+                            <button class="btn-delete">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="note">
+                <strong>Design Note:</strong> Color-coded status badges help users quickly identify task states. The table layout is responsive and easy to scan.
+            </div>
+        </div>
+        
+        <div class="wireframe">
+            <h2>2. Add/Edit Task Modal</h2>
+            
+            <div class="modal-overlay">
+                <div class="modal">
+                    <h3>Add New Task</h3>
+                    
+                    <div class="form-group">
+                        <label>Task Title *</label>
+                        <input type="text" placeholder="Enter task title (max 255 characters)" />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select>
+                            <option>TODO</option>
+                            <option>ICEBOX</option>
+                            <option>WIP</option>
+                            <option>DONE</option>
+                        </select>
+                    </div>
+                    
+                    <div class="modal-actions">
+                        <button class="btn-cancel">Cancel</button>
+                        <button class="btn-save">Save Task</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="note">
+                <strong>UX Note:</strong> Same modal is reused for both adding and editing. When editing, form fields are pre-populated with existing data.
+            </div>
+        </div>
+        
+        <div class="wireframe">
+            <h2>3. Delete Confirmation Dialog</h2>
+            
+            <div class="modal-overlay">
+                <div class="confirmation-modal">
+                    <h3>⚠️ Confirm Deletion</h3>
+                    <p>Are you sure you want to delete this task?<br><strong>"Implement REST API"</strong><br>This action cannot be undone.</p>
+                    
+                    <div class="modal-actions">
+                        <button class="btn-cancel">Cancel</button>
+                        <button class="btn-delete">Delete Task</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="note">
+                <strong>Safety Note:</strong> Always confirm destructive actions. Show what will be deleted to prevent mistakes.
+            </div>
+        </div>
+    </div>
+    
+    <!-- Code Guide Tab -->
+    <div id="code-guide" class="tab-content">
+        <div class="prd-section">
+            <h2>Implementation Roadmap</h2>
+            
+            <h3>Phase 1: Database Setup (Day 1)</h3>
+            <ol>
+                <li>Install MySQL and create database</li>
+                <li>Execute the CREATE TABLE script</li>
+                <li>Insert sample data for testing</li>
+            </ol>
+            <pre class="code-block">-- Create database
+CREATE DATABASE task_manager;
+USE task_manager;
+
+-- Create table (provided schema)
+
+-- Insert sample data
+INSERT INTO tasks (title, status) VALUES
+('Setup project repository', 'DONE'),
+('Design database schema', 'DONE'),
+('Implement REST API', 'WIP'),
+('Create frontend interface', 'TODO');</pre>
+            
+            <h3>Phase 2: Backend Development (Days 2-3)</h3>
+            <ol>
+                <li>Initialize Node.js project: <code>npm init -y</code></li>
+                <li>Install dependencies: <code>npm install express mysql2 cors</code></li>
+                <li>Create database connection (config/database.js)</li>
+                <li>Build task model (models/taskModel.js)</li>
+                <li>Implement controllers (controllers/taskController.js)</li>
+                <li>Define routes (routes/tasks.js)</li>
+                <li>Setup Express server (server.js)</li>
+            </ol>
+            
+            <div class="info-box">
+                <strong>Key Files to Create:</strong><br>
+                • server.js - Entry point, Express setup<br>
+                • config/database.js - MySQL connection<br>
+                • models/taskModel.js - Database queries<br>
+                • controllers/taskController.js - Business logic<br>
+                • routes/tasks.js - API endpoints
+            </div>
+            
+            <h3>Phase 3: Frontend Development (Days 4-5)</h3>
+            <ol>
+                <li>Create HTML structure (index.html)</li>
+                <li>Style with CSS (css/styles.css)</li>
+                <li>Implement JavaScript logic (js/app.js):
+                    <ul>
+                        <li>Fetch and display tasks</li>
+                        <li>Add task form submission</li>
+                        <li>Edit task functionality</li>
+                        <li>Delete task with confirmation</li>
+                        <li>Status filtering</li>
+                    </ul>
+                </li>
+            </ol>
+            
+            <div class="success-box">
+                <strong>Best Practice:</strong> Use <code>fetch()</code> API for making HTTP requests. Handle promises with async/await for cleaner code.
+            </div>
+            
+            <h3>Phase 4: Testing & Deployment (Day 6)</h3>
+            <ol>
+                <li>Test all CRUD operations</li>
+                <li>Test error scenarios (empty title, invalid ID)</li>
+                <li>Check status filtering</li>
+                <li>Verify confirmation dialogs</li>
+                <li>Test on different browsers</li>
+            </ol>
+        </div>
+        
+        <div class="prd-section">
+            <h2>Sample Code Snippets</h2>
+            
+            <h3>Backend: Database Connection (config/database.js)</h3>
+            <pre class="code-block">const mysql = require('mysql2');
+
+const pool = mysql.createPool({
+  host: 'localhost',
+  user: 'root',
+  password: 'your_password',
+  database: 'task_manager',
+  waitForConnections: true,
+  connectionLimit: 10
+});
+
+module.exports = pool.promise();</pre>
+            
+            <h3>Backend: Task Controller (controllers/taskController.js)</h3>
+            <pre class="code-block">const db = require('../config/database');
+
+// Get all tasks
+exports.getAllTasks = async (req, res) => {
+  try {
+    const [tasks] = await db.query('SELECT * FROM tasks');
+    res.json(tasks);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Create task
+exports.createTask = async (req, res) => {
+  try {
+    const { title, status = 'TODO' } = req.body;
+    if (!title) {
+      return res.status(400).json({ error: 'Title is required' });
+    }
+    const [result] = await db.query(
+      'INSERT INTO tasks (title, status) VALUES (?, ?)',
+      [title, status]
+    );
+    res.status(201).json({ 
+      id: result.insertId, 
+      title, 
+      status 
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};</pre>
+            
+            <h3>Frontend: Fetch Tasks (js/app.js)</h3>
+            <pre class="code-block">const API_URL = 'http://localhost:3000/api/tasks';
+
+// Fetch and display all tasks
+async function loadTasks() {
+  try {
+    const response = await fetch(API_URL);
+    const tasks = await response.json();
+    displayTasks(tasks);
+  } catch (error) {
+    console.error('Error loading tasks:', error);
+    alert('Failed to load tasks');
+  }
+}
+
+// Display tasks in table
+function displayTasks(tasks) {
+  const tbody = document.getElementById('taskTableBody');
+  tbody.innerHTML = '';
+  
+  tasks.forEach(task => {
+    const row = `
+      <tr>
+        <td>${task.id}</td>
+        <td>${task.title}</td>
+        <td><span class="badge ${task.status}">${task.status}</span></td>
+        <td>
+          <button onclick="editTask(${task.id})">Edit</button>
+          <button onclick="deleteTask(${task.id})">Delete</button>
+        </td>
+      </tr>
+    `;
+    tbody.innerHTML += row;
+  });
+}</pre>
+            
+            <div class="warning-box">
+                <strong>Security Note:</strong> Always validate and sanitize inputs on both frontend and backend. Use parameterized queries to prevent SQL injection.
+            </div>
+        </div>
+        
+        <div class="prd-section">
+            <h2>Key Concepts to Learn</h2>
+            
+            <h3>1. RESTful API Principles</h3>
+            <ul>
+                <li><strong>GET</strong> - Retrieve data (idempotent)</li>
+                <li><strong>POST</strong> - Create new resource</li>
+                <li><strong>PUT</strong> - Update existing resource</li>
+                <li><strong>DELETE</strong> - Remove resource</li>
+            </ul>
+            
+            <h3>2. HTTP Status Codes</h3>
+            <ul>
+                <li><strong>200 OK</strong> - Successful GET/PUT</li>
+                <li><strong>201 Created</strong> - Successful POST</li>
+                <li><strong>204 No Content</strong> - Successful DELETE</li>
+                <li><strong>400 Bad Request</strong> - Invalid input</li>
+                <li><strong>404 Not Found</strong> - Resource doesn't exist</li>
+                <li><strong>500 Internal Server Error</strong> - Server error</li>
+            </ul>
+            
+            <h3>3. Asynchronous JavaScript</h3>
+            <ul>
+                <li>Promises and async/await syntax</li>
+                <li>Error handling with try/catch</li>
+                <li>Making HTTP requests with fetch()</li>
+            </ul>
+            
+            <h3>4. MVC Architecture</h3>
+            <ul>
+                <li><strong>Model</strong> - Data layer (taskModel.js)</li>
+                <li><strong>View</strong> - Presentation (HTML/CSS)</li>
+                <li><strong>Controller</strong> - Business logic (taskController.js)</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- FAQ Tab -->
+    <div id="faq" class="tab-content">
+        <div class="faq-item">
+            <div class="faq-question">What is 3-tier architecture?</div>
+            <div class="faq-answer">
+                Three-tier architecture separates applications into three logical layers:
+                <ul>
+                    <li><strong>Presentation Tier (Frontend):</strong> User interface - what users see and interact with (HTML, CSS, JavaScript)</li>
+                    <li><strong>Application Tier (Backend):</strong> Business logic - processes requests, validates data, implements rules (Express.js API)</li>
+                    <li><strong>Data Tier (Database):</strong> Data storage and retrieval (MySQL)</li>
+                </ul>
+                This separation makes the application easier to maintain, scale, and test.
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">Why use Vanilla JavaScript instead of React or Angular?</div>
+            <div class="faq-answer">
+                For learning purposes, Vanilla JavaScript is excellent because:
+                <ul>
+                    <li>You understand how the DOM works without abstractions</li>
+                    <li>No build tools or complex setup required</li>
+                    <li>Direct manipulation of HTML elements teaches fundamentals</li>
+                    <li>Easier to debug and understand what's happening</li>
+                    <li>Once you master vanilla JS, frameworks become much easier to learn</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">What is CRUD?</div>
+            <div class="faq-answer">
+                CRUD stands for the four basic operations of persistent storage:
+                <ul>
+                    <li><strong>Create:</strong> Add new records (POST /api/tasks)</li>
+                    <li><strong>Read:</strong> Retrieve existing records (GET /api/tasks)</li>
+                    <li><strong>Update:</strong> Modify existing records (PUT /api/tasks/:id)</li>
+                    <li><strong>Delete:</strong> Remove records (DELETE /api/tasks/:id)</li>
+                </ul>
+                Almost every application needs CRUD functionality - it's a foundational concept in software development.
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">How do I handle CORS errors?</div>
+            <div class="faq-answer">
+                CORS (Cross-Origin Resource Sharing) errors occur when frontend and backend run on different ports. Fix by:
+                <ol>
+                    <li>Install CORS package: <code>npm install cors</code></li>
+                    <li>In your Express server.js:
+                        <pre class="code-block" style="margin-top: 10px;">const cors = require('cors');
+app.use(cors());</pre>
+                    </li>
+                </ol>
+                This allows your frontend (e.g., port 5500) to communicate with backend (e.g., port 3000).
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">Why use ENUM for status instead of VARCHAR?</div>
+            <div class="faq-answer">
+                Using ENUM provides several benefits:
+                <ul>
+                    <li><strong>Data Integrity:</strong> Only allows predefined values (ICEBOX, TODO, WIP, DONE)</li>
+                    <li><strong>Storage Efficiency:</strong> ENUM stores values as integers internally</li>
+                    <li><strong>Performance:</strong> Faster comparisons and queries</li>
+                    <li><strong>Self-Documentation:</strong> Schema shows all possible values</li>
+                    <li><strong>Prevents Errors:</strong> Can't accidentally insert "INPROGRESS" when it should be "WIP"</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">Should I use callbacks, promises, or async/await?</div>
+            <div class="faq-answer">
+                For modern Node.js development, use <strong>async/await</strong>:
+                <ul>
+                    <li><strong>Callbacks:</strong> Old style, leads to "callback hell", harder to read</li>
+                    <li><strong>Promises:</strong> Better than callbacks, but still uses .then() chains</li>
+                    <li><strong>Async/Await:</strong> Modern, clean syntax, easier error handling with try/catch</li>
+                </ul>
+                <pre class="code-block" style="margin-top: 10px;">// ✅ Use this (async/await)
+async function getTasks() {
+  try {
+    const [rows] = await db.query('SELECT * FROM tasks');
+    return rows;
+  } catch (error) {
+    console.error(error);
+  }
+}</pre>
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">How do I test my API without a frontend?</div>
+            <div class="faq-answer">
+                Use these tools to test API endpoints:
+                <ul>
+                    <li><strong>Postman:</strong> Popular GUI tool for API testing (free)</li>
+                    <li><strong>Thunder Client:</strong> VS Code extension (lightweight alternative)</li>
+                    <li><strong>cURL:</strong> Command-line tool (built into most systems)</li>
+                    <li><strong>Browser:</strong> For GET requests, just type URL in browser</li>
+                </ul>
+                Example cURL command:
+                <pre class="code-block" style="margin-top: 10px;">curl -X POST http://localhost:3000/api/tasks \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Test task","status":"TODO"}'</pre>
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">What's the difference between PUT and PATCH?</div>
+            <div class="faq-answer">
+                <ul>
+                    <li><strong>PUT:</strong> Replaces the entire resource - you must send ALL fields</li>
+                    <li><strong>PATCH:</strong> Partial update - send only fields you want to change</li>
+                </ul>
+                For this simple CRUD app, PUT is fine since we only have 2 fields. For complex resources with many fields, PATCH is more efficient.
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">How do I prevent SQL injection attacks?</div>
+            <div class="faq-answer">
+                <strong>Always use parameterized queries (prepared statements):</strong>
+                <pre class="code-block" style="margin-top: 10px;">// ❌ DANGEROUS - Never do this
+const query = `SELECT * FROM tasks WHERE id = ${id}`;
+
+// ✅ SAFE - Use parameterized queries
+const query = 'SELECT * FROM tasks WHERE id = ?';
+const [rows] = await db.query(query, [id]);</pre>
+                The <code>?</code> placeholder is safely replaced by the MySQL driver, preventing malicious SQL injection.
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">Why do we need a separate models folder?</div>
+            <div class="faq-answer">
+                Separation of concerns is key to maintainable code:
+                <ul>
+                    <li><strong>Models:</strong> Handle database operations (SQL queries)</li>
+                    <li><strong>Controllers:</strong> Handle business logic and request/response</li>
+                    <li><strong>Routes:</strong> Define API endpoints and link to controllers</li>
+                </ul>
+                This makes code easier to:
+                <ul>
+                    <li>Test each component independently</li>
+                    <li>Modify database queries without touching business logic</li>
+                    <li>Reuse models across different controllers</li>
+                    <li>Switch databases (MySQL to PostgreSQL) by only changing models</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">What's the best way to structure my project folder?</div>
+            <div class="faq-answer">
+                Follow this proven structure:
+                <pre class="code-block" style="margin-top: 10px;">project-root/
+├── frontend/               # All client-side code
+│   ├── index.html
+│   ├── css/
+│   │   └── styles.css
+│   └── js/
+│       └── app.js
+├── backend/                # All server-side code
+│   ├── server.js          # Entry point
+│   ├── config/            # Configuration files
+│   │   └── database.js
+│   ├── models/            # Database queries
+│   │   └── taskModel.js
+│   ├── controllers/       # Business logic
+│   │   └── taskController.js
+│   └── routes/            # API endpoints
+│       └── tasks.js
+├── package.json
+└── .env                   # Environment variables</pre>
+                Keep frontend and backend completely separate - they're different applications!
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">Common mistakes to avoid?</div>
+            <div class="faq-answer">
+                <ul>
+                    <li>❌ Not validating user input (always validate on both frontend AND backend)</li>
+                    <li>❌ Hardcoding database credentials (use .env files)</li>
+                    <li>❌ Not handling errors properly (use try/catch blocks)</li>
+                    <li>❌ Forgetting to close database connections (use connection pools)</li>
+                    <li>❌ Not testing API endpoints before building frontend</li>
+                    <li>❌ Mixing concerns (putting SQL queries in routes or controllers)</li>
+                    <li>❌ Not using proper HTTP status codes</li>
+                    <li>❌ Ignoring CORS issues until deployment</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="prd-section" style="margin-top: 40px;">
+            <h2>📚 Additional Learning Resources</h2>
+            
+            <h3>Recommended Study Path</h3>
+            <ol>
+                <li><strong>Week 1:</strong> Review JavaScript fundamentals (ES6+, async/await, fetch API)</li>
+                <li><strong>Week 2:</strong> Learn Express.js basics and routing</li>
+                <li><strong>Week 3:</strong> MySQL queries and database design</li>
+                <li><strong>Week 4:</strong> Build this CRUD application step by step</li>
+                <li><strong>Week 5:</strong> Add enhancements (search, sorting, pagination)</li>
+            </ol>
+            
+            <h3>Practice Exercises</h3>
+            <div class="info-box">
+                <strong>Level 1 (Beginner):</strong>
+                <ul>
+                    <li>Add a "created_at" timestamp field</li>
+                    <li>Implement task counter by status</li>
+                    <li>Add input validation messages</li>
+                </ul>
+                
+                <strong>Level 2 (Intermediate):</strong>
+                <ul>
+                    <li>Add search functionality</li>
+                    <li>Implement sorting by ID or title</li>
+                    <li>Add pagination (10 tasks per page)</li>
+                </ul>
+                
+                <strong>Level 3 (Advanced):</strong>
+                <ul>
+                    <li>Add user authentication (JWT)</li>
+                    <li>Implement task categories/tags</li>
+                    <li>Add due dates and priority levels</li>
+                    <li>Create a task history log</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Tab switching functionality - runs immediately
+        (function() {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const tabName = this.getAttribute('data-tab');
+                    
+                    // Remove active class from all tabs and contents
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to clicked tab and corresponding content
+                    this.classList.add('active');
+                    document.getElementById(tabName).classList.add('active');
+                });
+            });
+        })();
+    </script>
+</body>
+</html>
